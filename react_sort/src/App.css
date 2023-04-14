@@ -1,0 +1,43 @@
+.App{
+  background-color: #282c34;
+}
+.sorting_wrapper{
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  height: 80vh;
+}
+.element{
+  background-color: white;
+  margin: 0.2%;
+  width:1vw;
+}
+
+
+.settings_wrapper{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.size_wrapper{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+#size_label{
+  font-size: 2vw;
+  font-weight: bold;
+  margin:auto 2% auto 2%;
+}
+.sorter_wrapper{
+  display: flex;
+  flex-direction: row;
+}
+.sorter_wrapper div{
+  margin: auto 1% auto 1%;
+  background-color: #9fa8d4;
+  width:10vw;
+  padding:1% 3% 1% 3%;
+  text-align: center;
+}
