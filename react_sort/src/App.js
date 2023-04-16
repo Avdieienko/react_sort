@@ -11,16 +11,16 @@ import { getBubbleSortAnimations } from "./algorithms/BubbleSort";
 function App() {
   const [size,setSize] = useState(5)
   const [elements,setElements] = useState([40,45,60,50,76])
+  const [animationSpeed, setAnimationSpeed] = useState(30)
   const BASECOLOR = "white";
   const PIVOTCOLOR = "purple"
   const COMPARECOLOR = "red";
-  const ANIMATION_DELAY = 30;
   const FINISHCOLOR = "green"
 
 
 
   const ElementColumn = (props)=>{
-    const elementWidth = 20/props.size
+    const elementWidth = 50/props.size
     const elementHeight = props.num-39
     return(
       <>
@@ -55,18 +55,18 @@ function App() {
         setTimeout(()=>{
           leftElementStyle.backgroundColor = colour;
           rightElementStyle.backgroundColor = colour;
-        }, i*ANIMATION_DELAY)
+        }, i*animationSpeed)
       }
       else{
         setTimeout(()=>{
           const[elementIdx, elementHeight] = animations[i];
           const elementStyle = element[elementIdx].style;
           elementStyle.height = `${elementHeight-39}vh`;
-        }, i*ANIMATION_DELAY)
+        }, i*animationSpeed)
       }
       setTimeout(()=>{
         animateSortedArray();
-      },animations.length*ANIMATION_DELAY)
+      },animations.length*animationSpeed)
     }
   }
 
@@ -84,7 +84,7 @@ function App() {
         const pivotStyle = element[pivotIdx].style;
         setTimeout(()=>{
           pivotStyle.backgroundColor = colour;
-        },i*ANIMATION_DELAY)
+        },i*animationSpeed)
       }
       if(isColor){
         const [leftElementIdx, rightElementIdx,bool] = animations[i]
@@ -94,7 +94,7 @@ function App() {
         setTimeout(()=>{
           leftElementStyle.backgroundColor = colour;
           rightElementStyle.backgroundColor = colour;
-        },i*ANIMATION_DELAY)
+        },i*animationSpeed)
       }
       if(isSwap){
         setTimeout(()=>{
@@ -103,11 +103,11 @@ function App() {
           const rightStyle = element[rightIdx].style;
           leftStyle.height = `${leftHeight-39}vh`
           rightStyle.height = `${rightHeight-39}vh`
-        }, i*ANIMATION_DELAY)
+        }, i*animationSpeed)
       }
       setTimeout(()=>{
         animateSortedArray();
-      },animations.length*ANIMATION_DELAY)
+      },animations.length*animationSpeed)
     }
   }
 
@@ -125,7 +125,7 @@ function App() {
         setTimeout(()=>{
           leftElementStyle.backgroundColor = colour;
           rightElementStyle.backgroundColor = colour;
-        },i*ANIMATION_DELAY)
+        },i*animationSpeed)
       }
       else{
         setTimeout(()=>{
@@ -134,12 +134,12 @@ function App() {
           const rightStyle = element[rightIdx].style;
           leftStyle.height = `${leftHeight-39}vh`
           rightStyle.height = `${rightHeight-39}vh`
-        }, i*ANIMATION_DELAY)
+        }, i*animationSpeed)
       }
     }
     setTimeout(()=>{
       animateSortedArray();
-    },animations.length*ANIMATION_DELAY)
+    },animations.length*animationSpeed)
   }
 
 
@@ -149,7 +149,7 @@ function App() {
       const finishedElementStyle = finishedElements[i].style;
       setTimeout(()=>{
         finishedElementStyle.backgroundColor = FINISHCOLOR
-      },i*ANIMATION_DELAY)
+      },i*20)
     }
   }
 
@@ -162,9 +162,14 @@ function App() {
         </div>
         <div className="settings_wrapper">
           <div className="size_wrapper">
-            <label htmlFor="size" id="size_label">Size</label>
+            <label htmlFor="size" id="size_label">Size: </label>
             <input type="range" id="size" className="size_array_input" min="5" max="100" onChange={(e)=>createArray(e.target.value)} value={size}></input>
             <h1>{size}</h1>
+          </div>
+          <div className="speed_wrapper">
+            <label htmlFor="speed" id="speed_label">Speed: </label>
+            <input type="range" id="speed" className="speed_input" min="1" max="50" onChange={(e)=>setAnimationSpeed((e.target.value))} value={animationSpeed}></input>
+            <h1>{animationSpeed}</h1>
           </div>
           <div className="sorter_wrapper">
             <div onClick={MergeSort}><p>Merge Sort</p></div>
