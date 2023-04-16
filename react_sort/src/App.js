@@ -3,6 +3,7 @@ import './App.css';
 import { getMergeSortAnimations } from "./algorithms/MergeSort";
 import { getQuickSortAnimations } from "./algorithms/QuickSort";
 import { getBubbleSortAnimations } from "./algorithms/BubbleSort";
+import { getSelectionSortAnimations } from "./algorithms/SelectionSort";
 
 
 
@@ -143,13 +144,44 @@ function App() {
   }
 
 
+  const SelectionSort = ()=>{
+    const animations = getSelectionSortAnimations(elements);
+    console.log(animations)
+    for(let i = 0;i<animations.length;i++){
+      const element = document.getElementsByClassName("element");
+      const isColor = animations[i].length === 2;
+      if(isColor){
+        const [elementIdx, isActive] = animations[i]
+        const colour = isActive?COMPARECOLOR:BASECOLOR;
+        console.log(colour, isActive)
+        const elementStyle = element[elementIdx].style;
+        setTimeout(()=>{
+          elementStyle.backgroundColor = colour;
+        },i*animationSpeed)
+      }
+      else{
+        setTimeout(()=>{
+          const[leftIdx, rightIdx, leftHeight, rightHeight] = animations[i];
+          const leftStyle = element[leftIdx].style;
+          const rightStyle = element[rightIdx].style;
+          leftStyle.height = `${leftHeight-39}vh`
+          rightStyle.height = `${rightHeight-39}vh`
+        }, i*animationSpeed)
+      }
+    }
+    setTimeout(()=>{
+      animateSortedArray();
+    },animations.length*animationSpeed)
+  }
+
+
   const animateSortedArray = ()=>{
     const finishedElements = document.getElementsByClassName("element")
     for(let i = 0;i<elements.length;i++){
       const finishedElementStyle = finishedElements[i].style;
       setTimeout(()=>{
         finishedElementStyle.backgroundColor = FINISHCOLOR
-      },i*20)
+      },i*10)
     }
   }
 
@@ -157,9 +189,6 @@ function App() {
   return (
     <>
       <div className="App">
-        <div className="sorting_wrapper">
-          {elements.map((element,i)=><ElementColumn num={element} key={i} size={size}></ElementColumn>)}
-        </div>
         <div className="settings_wrapper">
           <div className="size_wrapper">
             <label htmlFor="size" id="size_label">Size: </label>
@@ -175,8 +204,11 @@ function App() {
             <div onClick={MergeSort}><p>Merge Sort</p></div>
             <div onClick={QuickSort}><p>Quick Sort</p></div>
             <div onClick={BubbleSort}><p>Buble Sort</p></div>
-            <div><p>Selections Sort</p></div>
+            <div onClick={SelectionSort}><p>Selection Sort</p></div>
           </div>
+        </div>
+        <div className="sorting_wrapper">
+          {elements.map((element,i)=><ElementColumn num={element} key={i} size={size}></ElementColumn>)}
         </div>
       </div>
 
