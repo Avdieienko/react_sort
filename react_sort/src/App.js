@@ -2,6 +2,7 @@ import { useState} from "react"
 import './App.css';
 import { getMergeSortAnimations } from "./algorithms/MergeSort";
 import { getQuickSortAnimations } from "./algorithms/QuickSort";
+import { getBubbleSortAnimations } from "./algorithms/BubbleSort";
 
 
 
@@ -111,6 +112,37 @@ function App() {
   }
 
 
+  const BubbleSort = ()=>{
+    const animations = getBubbleSortAnimations(elements)
+    for(let i = 0;i<animations.length;i++){
+      const element = document.getElementsByClassName("element");
+      const isColor = animations[i].length === 3;
+      if(isColor){
+        const [leftElementIdx, rightElementIdx, isActive] = animations[i];
+        const colour = isActive?COMPARECOLOR:BASECOLOR;
+        const leftElementStyle = element[leftElementIdx].style;
+        const rightElementStyle = element[rightElementIdx].style;
+        setTimeout(()=>{
+          leftElementStyle.backgroundColor = colour;
+          rightElementStyle.backgroundColor = colour;
+        },i*ANIMATION_DELAY)
+      }
+      else{
+        setTimeout(()=>{
+          const[leftIdx, rightIdx, leftHeight, rightHeight] = animations[i];
+          const leftStyle = element[leftIdx].style;
+          const rightStyle = element[rightIdx].style;
+          leftStyle.height = `${leftHeight-39}vh`
+          rightStyle.height = `${rightHeight-39}vh`
+        }, i*ANIMATION_DELAY)
+      }
+    }
+    setTimeout(()=>{
+      animateSortedArray();
+    },animations.length*ANIMATION_DELAY)
+  }
+
+
   const animateSortedArray = ()=>{
     const finishedElements = document.getElementsByClassName("element")
     for(let i = 0;i<elements.length;i++){
@@ -137,7 +169,7 @@ function App() {
           <div className="sorter_wrapper">
             <div onClick={MergeSort}><p>Merge Sort</p></div>
             <div onClick={QuickSort}><p>Quick Sort</p></div>
-            <div><p>Buble Sort</p></div>
+            <div onClick={BubbleSort}><p>Buble Sort</p></div>
             <div><p>Selections Sort</p></div>
           </div>
         </div>
