@@ -17,6 +17,7 @@ const quickSortHelper = (sortArray, startIdx, endIdx, animations) =>{
 const partition = (sortArray, startIdx, endIdx, animations) =>{
     let i = startIdx-1;
     const pivot = sortArray[endIdx];
+    animations.push([endIdx,true])
     // push back pivot location to highlight it
     for(let j = startIdx;j<=endIdx-1;j++){
         if(i===-1){
@@ -39,6 +40,7 @@ const partition = (sortArray, startIdx, endIdx, animations) =>{
             sortArray[j] = temp;
         }
     }
+    animations.push([endIdx,false])
     i++;
     animations.push([i,endIdx,sortArray[endIdx],sortArray[i]])
     const temp = sortArray[i];

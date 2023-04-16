@@ -11,6 +11,7 @@ function App() {
   const [size,setSize] = useState(5)
   const [elements,setElements] = useState([40,45,60,50,76])
   const BASECOLOR = "white";
+  const PIVOTCOLOR = "purple"
   const COMPARECOLOR = "red";
   const ANIMATION_DELAY = 30;
   const FINISHCOLOR = "green"
@@ -18,7 +19,7 @@ function App() {
 
 
   const ElementColumn = (props)=>{
-    const elementWidth = 10/props.size
+    const elementWidth = 20/props.size
     const elementHeight = props.num-39
     return(
       <>
@@ -74,6 +75,16 @@ function App() {
     for(let i = 0;i<animations.length;i++){
       const element = document.getElementsByClassName("element");
       const isColor = animations[i].length === 3;
+      const isPivot = animations[i].length === 2;
+      const isSwap = animations[i].length === 4;
+      if(isPivot){
+        const [pivotIdx, pivotBool] = animations[i];
+        const colour = pivotBool? PIVOTCOLOR:BASECOLOR;
+        const pivotStyle = element[pivotIdx].style;
+        setTimeout(()=>{
+          pivotStyle.backgroundColor = colour;
+        },i*ANIMATION_DELAY)
+      }
       if(isColor){
         const [leftElementIdx, rightElementIdx,bool] = animations[i]
         const colour = bool? COMPARECOLOR:BASECOLOR;
@@ -84,7 +95,7 @@ function App() {
           rightElementStyle.backgroundColor = colour;
         },i*ANIMATION_DELAY)
       }
-      else{
+      if(isSwap){
         setTimeout(()=>{
           const[leftIdx, rightIdx, leftHeight, rightHeight] = animations[i];
           const leftStyle = element[leftIdx].style;
