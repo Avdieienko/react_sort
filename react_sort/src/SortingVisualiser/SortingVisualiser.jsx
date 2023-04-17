@@ -206,41 +206,41 @@ export const SortingVisualiser = ()=>{
         <>
         <div className="App">
             <div className="settings_wrapper">
-            <div className="size_wrapper">
-                <label htmlFor="size" id="size_label">Size: </label>
-                <input
-                type="range"
-                id="size"
-                className="size_array_input"
-                min="5" max="100"
-                onChange={(e)=>createArray(e.target.value)}
-                value={size}
-                disabled = {isSorting?"disabled":""}
-                ></input>
-                <h1>{size}</h1>
-            </div>
-            <div className="speed_wrapper">
-                <label htmlFor="speed" id="speed_label">Speed: </label>
-                <input
-                type="range"
-                id="speed"
-                className="speed_input"
-                min="1" max="50"
-                onChange={(e)=>setAnimationSpeed((e.target.value))}
-                value={animationSpeed}
-                disabled = {isSorting?"disabled":""}
-                ></input>
-                <h1>{animationSpeed}</h1>
-            </div>
-            <div className="generate_array">
-                <div onClick={()=>createArray(size)} className="generate"><p>Generate new array</p></div>
-            </div>
-            <div className="sorter_wrapper">
-                <div onClick={MergeSort}><p>Merge Sort</p></div>
-                <div onClick={QuickSort}><p>Quick Sort</p></div>
-                <div onClick={BubbleSort}><p>Buble Sort</p></div>
-                <div onClick={SelectionSort}><p>Selection Sort</p></div>
-            </div>
+                <div className="size_wrapper">
+                    <label htmlFor="size" id="size_label">Size: </label>
+                    <input
+                    type="range"
+                    id="size"
+                    className="size_array_input"
+                    min="5" max="100"
+                    onChange={(e)=>createArray(e.target.value)}
+                    value={size}
+                    disabled = {isSorting?"disabled":""}
+                    ></input>
+                    <h1>{size}</h1>
+                </div>
+                <div className="speed_wrapper">
+                    <label htmlFor="speed" id="speed_label">Speed: </label>
+                    <input
+                    type="range"
+                    id="speed"
+                    className="speed_input"
+                    min="1" max="50"
+                    onChange={(e)=>setAnimationSpeed((e.target.value))}
+                    value={animationSpeed}
+                    disabled = {isSorting?"disabled":""}
+                    ></input>
+                    <h1>{animationSpeed}</h1>
+                </div>
+                <div className="generate_array">
+                    <div onClick={()=>createArray(size)} className="generate"><p>Generate new array</p></div>
+                </div>
+                <div className="sorter_wrapper">
+                    <div onClick={MergeSort}><p>Merge Sort</p></div>
+                    <div onClick={QuickSort}><p>Quick Sort</p></div>
+                    <div onClick={BubbleSort}><p>Buble Sort</p></div>
+                    <div onClick={SelectionSort}><p>Selection Sort</p></div>
+                </div>
             </div>
             <div className="sorting_wrapper">
             {elements.map((element,i)=><ElementColumn num={element} key={i} size={size}></ElementColumn>)}
