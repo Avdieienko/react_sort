@@ -1,7 +1,8 @@
 export const getMergeSortAnimations = (array)=>{
     const animations = [];
     const sortArray = [...array];
-    mergeSortHelper(array, 0, array.length-1, sortArray, animations)
+    const mainArray = [...array]
+    mergeSortHelper(mainArray, 0, array.length-1, sortArray, animations)
     // animation has form of [[indexes that are compared],
     // [indexes that are compared],
     //  [index to change, height to which chenga the bar]]

@@ -8,7 +8,7 @@ import { getSelectionSortAnimations } from "../algorithms/SelectionSort";
 export const SortingVisualiser = ()=>{
     const [size,setSize] = useState(5)
     const [elements,setElements] = useState([40,45,60,50,76])
-    const [sorting, setSorting] = useState(false)
+    const [isSorting,setIsSorting] = useState(false)
     const [animationSpeed, setAnimationSpeed] = useState(30)
     const BASECOLOR = "white";
     const PIVOTCOLOR = "purple"
@@ -29,157 +29,176 @@ export const SortingVisualiser = ()=>{
 
 
     const createArray = (num_elements)=>{
+        if(isSorting) return;
         setSize(num_elements)
         const temp_elements  = []
         const min = 40;
         const max = 100;
         for(let i =0;i<num_elements;i++){
-        const rand = Math.round(min + Math.random() * (max - min));
-        temp_elements.push(rand)
+            const rand = Math.round(min + Math.random() * (max - min));
+            temp_elements.push(rand)
         }
         setElements(temp_elements)
     }
 
     const MergeSort = ()=>{
+        if(isSorting) return;
+        setIsSorting(true)
         const animations = getMergeSortAnimations(elements)
-        for (let i = 0;i<animations.length;i++){
-        const element = document.getElementsByClassName("element");
-        const isColor = i%3 !== 2;
-        if(isColor){
-            const [leftElementIdx, rightElementIdx] = animations[i];
-            const colour = i%3 === 0 ? COMPARECOLOR : BASECOLOR;
-            const leftElementStyle = element[leftElementIdx].style;
-            const rightElementStyle = element[rightElementIdx].style;
-            setTimeout(()=>{
-            leftElementStyle.backgroundColor = colour;
-            rightElementStyle.backgroundColor = colour;
-            }, i*animationSpeed)
-        }
-        else{
-            setTimeout(()=>{
-            const[elementIdx, elementHeight] = animations[i];
-            const elementStyle = element[elementIdx].style;
-            elementStyle.height = `${elementHeight-39}vh`;
-            }, i*animationSpeed)
-        }
+        setTimeout(()=>{
+            for (let i = 0;i<animations.length;i++){
+                const element = document.getElementsByClassName("element");
+                const isColor = i%3 !== 2;
+                if(isColor){
+                    const [leftElementIdx, rightElementIdx] = animations[i];
+                    const colour = i%3 === 0 ? COMPARECOLOR : BASECOLOR;
+                    const leftElementStyle = element[leftElementIdx].style;
+                    const rightElementStyle = element[rightElementIdx].style;
+                    setTimeout(()=>{
+                        leftElementStyle.backgroundColor = colour;
+                        rightElementStyle.backgroundColor = colour;
+                    }, i*animationSpeed)
+                }
+                else{
+                    setTimeout(()=>{
+                        const[elementIdx, elementHeight] = animations[i];
+                        const elementStyle = element[elementIdx].style;
+                        elementStyle.height = `${elementHeight-39}vh`;
+                    }, i*animationSpeed)
+                }
+            }
+        })
         setTimeout(()=>{
             animateSortedArray();
-        },animations.length*animationSpeed)
-        }
+        },animations.length*animationSpeed+100)
     }
 
 
     const QuickSort = ()=>{
+        if(isSorting) return;
+        setIsSorting(true)
         const animations = getQuickSortAnimations(elements)
-        for(let i = 0;i<animations.length;i++){
-        const element = document.getElementsByClassName("element");
-        const isColor = animations[i].length === 3;
-        const isPivot = animations[i].length === 2;
-        const isSwap = animations[i].length === 4;
-        if(isPivot){
-            const [pivotIdx, pivotBool] = animations[i];
-            const colour = pivotBool? PIVOTCOLOR:BASECOLOR;
-            const pivotStyle = element[pivotIdx].style;
-            setTimeout(()=>{
-            pivotStyle.backgroundColor = colour;
-            },i*animationSpeed)
-        }
-        if(isColor){
-            const [leftElementIdx, rightElementIdx,bool] = animations[i]
-            const colour = bool? COMPARECOLOR:BASECOLOR;
-            const leftElementStyle = element[leftElementIdx].style;
-            const rightElementStyle = element[rightElementIdx].style;
-            setTimeout(()=>{
-            leftElementStyle.backgroundColor = colour;
-            rightElementStyle.backgroundColor = colour;
-            },i*animationSpeed)
-        }
-        if(isSwap){
-            setTimeout(()=>{
-            const[leftIdx, rightIdx, leftHeight, rightHeight] = animations[i];
-            const leftStyle = element[leftIdx].style;
-            const rightStyle = element[rightIdx].style;
-            leftStyle.height = `${leftHeight-39}vh`
-            rightStyle.height = `${rightHeight-39}vh`
-            }, i*animationSpeed)
-        }
+        setTimeout(()=>{
+            for(let i = 0;i<animations.length;i++){
+                const element = document.getElementsByClassName("element");
+                const isColor = animations[i].length === 3;
+                const isPivot = animations[i].length === 2;
+                const isSwap = animations[i].length === 4;
+                if(isPivot){
+                    const [pivotIdx, pivotBool] = animations[i];
+                    const colour = pivotBool? PIVOTCOLOR:BASECOLOR;
+                    const pivotStyle = element[pivotIdx].style;
+                    setTimeout(()=>{
+                    pivotStyle.backgroundColor = colour;
+                    },i*animationSpeed)
+                }
+                if(isColor){
+                    const [leftElementIdx, rightElementIdx,bool] = animations[i]
+                    const colour = bool? COMPARECOLOR:BASECOLOR;
+                    const leftElementStyle = element[leftElementIdx].style;
+                    const rightElementStyle = element[rightElementIdx].style;
+                    setTimeout(()=>{
+                    leftElementStyle.backgroundColor = colour;
+                    rightElementStyle.backgroundColor = colour;
+                    },i*animationSpeed)
+                }
+                if(isSwap){
+                    setTimeout(()=>{
+                    const[leftIdx, rightIdx, leftHeight, rightHeight] = animations[i];
+                    const leftStyle = element[leftIdx].style;
+                    const rightStyle = element[rightIdx].style;
+                    leftStyle.height = `${leftHeight-39}vh`
+                    rightStyle.height = `${rightHeight-39}vh`
+                    }, i*animationSpeed)
+                }
+            }
+        })
         setTimeout(()=>{
             animateSortedArray();
-        },animations.length*animationSpeed)
-        }
-        setSorting(false)
+        },animations.length*animationSpeed+100)
     }
 
 
     const BubbleSort = ()=>{
+        if(isSorting) return;
+        setIsSorting(true)
         const animations = getBubbleSortAnimations(elements)
-        for(let i = 0;i<animations.length;i++){
-        const element = document.getElementsByClassName("element");
-        const isColor = animations[i].length === 3;
-        if(isColor){
-            const [leftElementIdx, rightElementIdx, isActive] = animations[i];
-            const colour = isActive?COMPARECOLOR:BASECOLOR;
-            const leftElementStyle = element[leftElementIdx].style;
-            const rightElementStyle = element[rightElementIdx].style;
-            setTimeout(()=>{
-            leftElementStyle.backgroundColor = colour;
-            rightElementStyle.backgroundColor = colour;
-            },i*animationSpeed)
-        }
-        else{
-            setTimeout(()=>{
-            const[leftIdx, rightIdx, leftHeight, rightHeight] = animations[i];
-            const leftStyle = element[leftIdx].style;
-            const rightStyle = element[rightIdx].style;
-            leftStyle.height = `${leftHeight-39}vh`
-            rightStyle.height = `${rightHeight-39}vh`
-            }, i*animationSpeed)
-        }
-        }
         setTimeout(()=>{
-        animateSortedArray();
-        },animations.length*animationSpeed)
-        setSorting(false)
+            for(let i = 0;i<animations.length;i++){
+                const element = document.getElementsByClassName("element");
+                const isColor = animations[i].length === 3;
+                if(isColor){
+                    const [leftElementIdx, rightElementIdx, isActive] = animations[i];
+                    const colour = isActive?COMPARECOLOR:BASECOLOR;
+                    const leftElementStyle = element[leftElementIdx].style;
+                    const rightElementStyle = element[rightElementIdx].style;
+                    setTimeout(()=>{
+                    leftElementStyle.backgroundColor = colour;
+                    rightElementStyle.backgroundColor = colour;
+                    },i*animationSpeed)
+                }
+                else{
+                    setTimeout(()=>{
+                    const[leftIdx, rightIdx, leftHeight, rightHeight] = animations[i];
+                    const leftStyle = element[leftIdx].style;
+                    const rightStyle = element[rightIdx].style;
+                    leftStyle.height = `${leftHeight-39}vh`
+                    rightStyle.height = `${rightHeight-39}vh`
+                    }, i*animationSpeed)
+                }
+                }
+        })
+        setTimeout(()=>{
+            animateSortedArray();
+        },animations.length*animationSpeed+100)
     }
 
 
     const SelectionSort = ()=>{
+        if(isSorting) return;
+        setIsSorting(true)
         const animations = getSelectionSortAnimations(elements);
-        for(let i = 0;i<animations.length;i++){
-        const element = document.getElementsByClassName("element");
-        const isColor = animations[i].length === 2;
-        if(isColor){
-            const [elementIdx, isActive] = animations[i]
-            const colour = isActive?COMPARECOLOR:BASECOLOR;
-            const elementStyle = element[elementIdx].style;
-            setTimeout(()=>{
-            elementStyle.backgroundColor = colour;
-            },i*animationSpeed)
-        }
-        else{
-            setTimeout(()=>{
-            const[leftIdx, rightIdx, leftHeight, rightHeight] = animations[i];
-            const leftStyle = element[leftIdx].style;
-            const rightStyle = element[rightIdx].style;
-            leftStyle.height = `${leftHeight-39}vh`
-            rightStyle.height = `${rightHeight-39}vh`
-            }, i*animationSpeed)
-        }
-        }
         setTimeout(()=>{
-        animateSortedArray();
-        },animations.length*animationSpeed)
+            for(let i = 0;i<animations.length;i++){
+                const element = document.getElementsByClassName("element");
+                const isColor = animations[i].length === 2;
+                if(isColor){
+                    const [elementIdx, isActive] = animations[i]
+                    const colour = isActive?COMPARECOLOR:BASECOLOR;
+                    const elementStyle = element[elementIdx].style;
+                    setTimeout(()=>{
+                        elementStyle.backgroundColor = colour;
+                    },i*animationSpeed)
+                }
+                else{
+                    setTimeout(()=>{
+                        const[leftIdx, rightIdx, leftHeight, rightHeight] = animations[i];
+                        const leftStyle = element[leftIdx].style;
+                        const rightStyle = element[rightIdx].style;
+                        leftStyle.height = `${leftHeight-39}vh`
+                        rightStyle.height = `${rightHeight-39}vh`
+                    }, i*animationSpeed)
+                }
+            }
+        })
+        setTimeout(()=>{
+            animateSortedArray();
+        },animations.length*animationSpeed+100)
     }
 
 
     const animateSortedArray = ()=>{
+
         const finishedElements = document.getElementsByClassName("element")
-        for(let i = 0;i<elements.length;i++){
-        const finishedElementStyle = finishedElements[i].style;
-        setTimeout(()=>{
-            finishedElementStyle.backgroundColor = FINISHCOLOR
-        },i*10)
+        for(let i = 0;i<finishedElements.length;i++){
+            const finishedElementStyle = finishedElements[i].style;
+            setTimeout(()=>{
+                finishedElementStyle.backgroundColor = FINISHCOLOR
+            },i*10)
         }
+        setTimeout(()=>{
+            setIsSorting(false)
+        },finishedElements.length*20)
     }
 
 
@@ -196,6 +215,7 @@ export const SortingVisualiser = ()=>{
                 min="5" max="100"
                 onChange={(e)=>createArray(e.target.value)}
                 value={size}
+                disabled = {isSorting?"disabled":""}
                 ></input>
                 <h1>{size}</h1>
             </div>
@@ -208,9 +228,12 @@ export const SortingVisualiser = ()=>{
                 min="1" max="50"
                 onChange={(e)=>setAnimationSpeed((e.target.value))}
                 value={animationSpeed}
-                disabled = {sorting?"disabled":""}
+                disabled = {isSorting?"disabled":""}
                 ></input>
                 <h1>{animationSpeed}</h1>
+            </div>
+            <div className="generate_array">
+                <div onClick={()=>createArray(size)} className="generate"><p>Generate new array</p></div>
             </div>
             <div className="sorter_wrapper">
                 <div onClick={MergeSort}><p>Merge Sort</p></div>
