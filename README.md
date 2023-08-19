@@ -9,11 +9,11 @@
 [Preview]: https://img.shields.io/badge/Preview-5599dd?style=for-the-badge
 
 [Link]: https://avdieienko.com/sorter/ 'Preview.'
- Website that provides information and data about cryptocurrencies. Was build using Binance API. Gives all current data and kline graph for more than 25 currencies.  
- # Examples
+ Sorting Visualiser. Includes Merge Sort, Quick Sort, Buble Sort, and Selection Sort. Ability to change array length, array, and a speed of animation.
+ # Example
  ![Example 1](https://github.com/Avdieienko/react_sort/blob/main/example/example.gif)
  <br>
- **gif a bit lagging, just visit website**
+ **gif a bit lagging, just visit the website**
  
  <br>
 
